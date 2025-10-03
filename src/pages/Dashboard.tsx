@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Menu, Lock, Activity, ClipboardList, Users } from "lucide-react";
 
 export default function Dashboard() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode] = useState(false);
 
   return (
     <div className={darkMode ? "dark" : ""}>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-
+import evsImage from "../assets/logo.png";
 type SignUpData = {
   name: string
   email: string
@@ -40,14 +40,22 @@ export default function Login() {
   return (
     <div className="h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 p-6">
       <div className="w-full max-w-lg bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mx-4">
-        <div className="mb-6">
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
-            {mode === 'signin' ? 'Welcome back' : 'Create account'}
-          </h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            {mode === 'signin' ? 'Sign in to your account' : 'Start your free account'}
-          </p>
-        </div>
+       <div className="mb-6 text-center">
+  {/* Centered Circular Image */}
+  <img
+    src={evsImage}
+    alt="Profile"
+    className="mx-auto mb-4 w-24 h-24 object-cover rounded-full"
+  />
+
+  <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+    {mode === 'signin' ? 'Welcome back' : 'Create account'}
+  </h2>
+  <p className="text-sm text-gray-500 dark:text-gray-400">
+    {mode === 'signin' ? 'Sign in to your account' : 'Start your free account'}
+  </p>
+</div>
+
 
         {errors && (
           <div className="mb-4 text-sm text-red-600 dark:text-red-400">{errors}</div>

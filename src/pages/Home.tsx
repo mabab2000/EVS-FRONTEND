@@ -36,7 +36,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center dark:bg-gray-900 p-6">
+    <div className="min-h-screen md:w-full flex items-center justify-center  p-6">
       <div className="bg-white border border-gray-200 dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row w-full max-w-4xl">
         {/* Left side - Hidden on mobile, visible on md screens and up */}
         <div className="hidden md:flex flex-col items-center justify-center md:w-1/2 p-8 bg-gray-50 dark:bg-gray-700">

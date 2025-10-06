@@ -3,6 +3,7 @@ import "../../App.css";
 
 import { Home, User, FileText, Users, Menu, Bell } from "lucide-react";
 import logo from "../../assets/logo.png";
+import profile from "../../assets/profile.png";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false); // Mobile menu toggle
@@ -86,7 +87,7 @@ export default function Navbar() {
         {/* Profile Section */}
         <div className="flex items-center justify-center mt-auto p-4 fixed bottom-0 left-0 right-0">
           <img
-            src={logo}
+            src={profile}
             alt="Profile"
             className={`rounded-full ${isCollapsed ? "w-8 h-8" : "w-16 h-16"}`}
           />

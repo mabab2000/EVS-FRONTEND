@@ -6,9 +6,9 @@ export default function Dashboard() {
 
   return (
     <div className={darkMode ? "dark" : ""}>
-      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors py-10 px-4">
+      <div className="min-h-screen   transition-colors py-10 px-4">
         {/* Container */}
-        <div className="max-w-6xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 transition-colors">
+        <div className="max-w-6xl border border-gray-200 mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 transition-colors">
           
           {/* Header */}
           <header className="flex justify-between items-center mb-8">
@@ -24,9 +24,10 @@ export default function Dashboard() {
               <p className="text-gray-600 dark:text-gray-400 text-xl text-center">
                 Use our EVS app to manage your attendance process efficiently and securely.
               </p>
+              <a href="#/Checkin">
               <h1 className="text-6xl font-bold text-gray-900 dark:text-white mt-6 text-center">
                 1000 Taps
-              </h1>
+              </h1></a>
             </div>
           </div>
 

@@ -11,9 +11,9 @@ export default function VerticalSidebar() {
   const navigate = useNavigate();
   
   const navItems = [
-    { icon: <Home size={16} />, label: "Dashboard", path: "/ocr" },
-    { icon: <User size={16} />, label: "Visitor Desk", path: "/ocr" },
-    { icon: <Users size={16} />, label: "Visitor Master", path: "/ocr" },
+    { icon: <Home size={16} />, label: "Dashboard", path: "/dashboard" },
+    { icon: <User size={16} />, label: "Ocr", path: "/ocr" },
+    { icon: <Users size={16} />, label: "Report", path: "/report" },
     { icon: <FileText size={16} />, label: "Template", path: "/ocr" },
     { icon: <FileText size={16} />, label: "Event Master", path: "/ocr" },
     { icon: <User size={16} />, label: "Member Master", path: "/ocr" },

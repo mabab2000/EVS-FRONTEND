@@ -206,14 +206,14 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Statistics Cards - Compact Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-3">
+        {/* Statistics Cards - Full Width Grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {statsData.map((stat, index) => (
             <div 
               key={index}
-              className="p-3 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer"
+              className="p-4 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer"
               style={{ 
-                background: "rgba(255, 255, 255, 0.8)",
+                background: "rgba(255, 255, 255, 0.9)",
                 backdropFilter: "blur(10px)",
                 border: "1px solid rgba(255, 255, 255, 0.2)"
               }}
@@ -261,22 +261,20 @@ export default function Dashboard() {
           ))}
         </div>
 
-        {/* Main Content Grid - Optimized Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 flex-1 overflow-y-auto overflow-x-hidden min-h-0">
+        {/* Main Content Grid - Full Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
           
-          {/* Quick Actions - Compact */}
+          {/* Quick Actions - Full Size */}
           <div 
-            className="lg:col-span-2 p-3 rounded-xl shadow-lg h-fit"
+            className="lg:col-span-2 p-4 rounded-xl shadow-lg"
             style={{ 
-              background: "rgba(255, 255, 255, 0.8)",
+              background: "rgba(255, 255, 255, 0.9)",
               backdropFilter: "blur(10px)",
-              border: "1px solid rgba(255, 255, 255, 0.2)",
-              maxHeight: "70vh",
-              overflowY: "auto"
+              border: "1px solid rgba(255, 255, 255, 0.2)"
             }}
           >
             <h2 
-              className="text-base font-semibold mb-3"
+              className="text-lg font-semibold mb-4"
               style={{ 
                 color: "#0072a7",
                 fontFamily: "'Roboto Slab', serif",
@@ -285,11 +283,11 @@ export default function Dashboard() {
             >
               Quick Actions
             </h2>
-            <div className="space-y-2">
+            <div className="space-y-3">
               {quickActions.map((action, index) => (
                 <div 
                   key={index}
-                  className="group p-2.5 rounded-lg transition-all duration-300 hover:shadow-md cursor-pointer"
+                  className="group p-4 rounded-lg transition-all duration-300 hover:shadow-md cursor-pointer"
                   style={{ 
                     background: "rgba(248, 250, 252, 0.8)",
                     border: "1px solid rgba(226, 232, 240, 0.8)"
@@ -303,17 +301,16 @@ export default function Dashboard() {
                     e.currentTarget.style.borderColor = "rgba(226, 232, 240, 0.8)";
                   }}
                 >
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center space-x-2">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center space-x-3">
                       <div 
-                        className={`p-1.5 rounded-lg text-white ${action.color}`}
-                        style={{ transform: "scale(0.8)" }}
+                        className={`p-2 rounded-lg text-white ${action.color}`}
                       >
                         {action.icon}
                       </div>
                       <div>
                         <h3 
-                          className="font-semibold text-gray-900 text-xs"
+                          className="font-semibold text-gray-900 text-sm"
                           style={{ fontFamily: "'Roboto Slab', serif" }}
                         >
                           {action.title}
@@ -326,7 +323,7 @@ export default function Dashboard() {
                         </p>
                       </div>
                     </div>
-                    <ChevronRight className="w-3 h-3 text-gray-400 group-hover:text-gray-600 group-hover:translate-x-1 transition-all" />
+                    <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 group-hover:translate-x-1 transition-all" />
                   </div>
                   <div>
                     <div className="flex items-center justify-between mb-1">
@@ -361,19 +358,17 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Attendance Performance Overview - Expanded */}
+          {/* Attendance Performance Overview - Full Size */}
           <div 
-            className="lg:col-span-3 p-3 rounded-xl shadow-lg h-fit"
+            className="lg:col-span-3 p-4 rounded-xl shadow-lg"
             style={{ 
-              background: "rgba(255, 255, 255, 0.8)",
+              background: "rgba(255, 255, 255, 0.9)",
               backdropFilter: "blur(10px)",
-              border: "1px solid rgba(255, 255, 255, 0.2)",
-              maxHeight: "70vh",
-              overflowY: "auto"
+              border: "1px solid rgba(255, 255, 255, 0.2)"
             }}
           >
             <h2 
-              className="text-base font-semibold mb-3"
+              className="text-lg font-semibold mb-4"
               style={{ 
                 color: "#0072a7",
                 fontFamily: "'Roboto Slab', serif",
@@ -382,34 +377,34 @@ export default function Dashboard() {
             >
               Attendance Performance
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               
               {/* Left Column - Performance Metrics */}
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <div 
-                  className="p-2.5 rounded-lg"
+                  className="p-3 rounded-lg"
                   style={{ background: "rgba(239, 246, 255, 0.6)" }}
                 >
-                  <div className="flex items-center justify-between mb-1">
+                  <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center space-x-2">
-                      <TrendingUp className="w-3 h-3 text-green-500" />
+                      <TrendingUp className="w-4 h-4 text-green-500" />
                       <span 
-                        className="font-medium text-gray-900 text-xs"
+                        className="font-medium text-gray-900 text-sm"
                         style={{ fontFamily: "'Roboto Slab', serif" }}
                       >
                         Check-in Success Rate
                       </span>
                     </div>
                     <span 
-                      className="text-green-600 font-bold text-xs"
+                      className="text-green-600 font-bold text-sm"
                       style={{ fontFamily: "'Roboto Slab', serif" }}
                     >
                       99.5%
                     </span>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-1.5">
+                  <div className="w-full bg-gray-200 rounded-full h-2">
                     <div
-                      className="bg-green-500 h-1.5 rounded-full"
+                      className="bg-green-500 h-2 rounded-full"
                       style={{ width: "99.5%" }}
                     ></div>
                   </div>

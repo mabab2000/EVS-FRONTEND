@@ -90,141 +90,21 @@ export default function RegisterForm() {
     <div 
       className="min-h-screen flex items-center justify-center p-4"
       style={{ 
-        background: "linear-gradient(135deg, #1e3a8a 0%, #1e40af 25%, #3b82f6 50%, #60a5fa 75%, #93c5fd 100%)",
-        fontFamily: "'Roboto Slab', serif",
-        position: "relative"
+        background: "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)",
+        fontFamily: "'Roboto Slab', serif"
       }}
     >
-      {/* Enhanced Floating Background Shapes */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Large gradient orbs */}
-        <div 
-          className="absolute -top-32 -left-32 w-96 h-96 rounded-full opacity-15"
-          style={{
-            background: "radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 50%, transparent 100%)",
-            animation: "float 12s ease-in-out infinite"
-          }}
-        ></div>
-        <div 
-          className="absolute top-1/4 -right-40 w-80 h-80 opacity-20"
-          style={{
-            background: "radial-gradient(circle, rgba(6,182,212,0.5) 0%, rgba(14,165,233,0.2) 50%, transparent 100%)",
-            animation: "float 15s ease-in-out infinite reverse"
-          }}
-        ></div>
-        <div 
-          className="absolute -bottom-48 left-1/4 w-72 h-72 rounded-full opacity-25"
-          style={{
-            background: "radial-gradient(circle, rgba(59,130,246,0.4) 0%, rgba(37,99,235,0.1) 50%, transparent 100%)",
-            animation: "float 10s ease-in-out infinite"
-          }}
-        ></div>
-        
-        {/* Geometric accent shapes */}
-        <div 
-          className="absolute top-1/5 left-16 w-20 h-20 opacity-25"
-          style={{
-            background: "linear-gradient(45deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.1) 100%)",
-            borderRadius: "30% 70% 70% 30% / 30% 30% 70% 70%",
-            animation: "rotate 20s linear infinite"
-          }}
-        ></div>
-        <div 
-          className="absolute bottom-1/3 right-16 w-16 h-16 opacity-30 rotate-45"
-          style={{
-            background: "linear-gradient(45deg, rgba(34,197,94,0.5) 0%, rgba(16,185,129,0.2) 100%)",
-            animation: "float 8s ease-in-out infinite reverse"
-          }}
-        ></div>
-        <div 
-          className="absolute top-2/3 left-1/3 w-12 h-12 opacity-20"
-          style={{
-            background: "linear-gradient(45deg, rgba(168,85,247,0.4) 0%, rgba(139,92,246,0.2) 100%)",
-            borderRadius: "50%",
-            animation: "float 6s ease-in-out infinite"
-          }}
-        ></div>
-      </div>
-
-      {/* Add CSS animations */}
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-30px) rotate(10deg); }
-        }
-        @keyframes rotate {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-      `}</style>
-
       {/* Main Container */}
-      <div 
-        className="w-full max-w-5xl rounded-xl shadow-2xl overflow-hidden relative z-10"
-        style={{ 
-          background: "rgba(255, 255, 255, 0.95)",
-          backdropFilter: "blur(15px)",
-          border: "1px solid rgba(255, 255, 255, 0.2)"
-        }}
-      >
+      <div className="w-full max-w-5xl bg-white rounded-xl shadow-xl overflow-hidden">
         <div className="flex flex-col lg:flex-row min-h-[500px]">
           {/* Left Sidebar - Progress */}
           <div 
-            className="lg:w-1/3 w-full lg:relative lg:block shadow-xl relative overflow-hidden"
+            className="lg:w-1/3 w-full lg:relative lg:block bg-white shadow-xl"
             style={{ 
-              background: "linear-gradient(135deg, #0072a7 0%, #1e40af 25%, #3b82f6 50%, #0ea5e9 75%, #0284c7 100%)"
+              background: "linear-gradient(135deg, #0072a7 0%, #005b8a 100%)"
             }}
           >
-            {/* Enhanced Background Pattern */}
-            <div className="absolute inset-0">
-              {/* Animated gradient elements */}
-              <div 
-                className="absolute top-0 right-0 w-40 h-40 rounded-full opacity-15"
-                style={{
-                  background: "radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.1) 70%, transparent 100%)",
-                  animation: "float 8s ease-in-out infinite"
-                }}
-              ></div>
-              <div 
-                className="absolute bottom-1/4 left-0 w-32 h-32 opacity-20"
-                style={{
-                  background: "radial-gradient(circle, rgba(34,197,94,0.5) 0%, rgba(16,185,129,0.2) 50%, transparent 100%)",
-                  borderRadius: "50% 20% 50% 20%",
-                  animation: "float 12s ease-in-out infinite reverse"
-                }}
-              ></div>
-              <div 
-                className="absolute top-1/3 left-1/4 w-24 h-24 opacity-25"
-                style={{
-                  background: "linear-gradient(45deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 100%)",
-                  borderRadius: "30% 70% 70% 30% / 30% 30% 70% 70%",
-                  animation: "rotate 15s linear infinite"
-                }}
-              ></div>
-              
-              {/* Geometric line patterns */}
-              <div className="absolute top-1/2 right-1/4 w-20 h-20 opacity-20">
-                <div 
-                  className="w-full h-full border-2 border-white opacity-50"
-                  style={{
-                    borderRadius: "50% 20% 50% 20%",
-                    animation: "rotate 10s linear infinite reverse"
-                  }}
-                ></div>
-              </div>
-              <div className="absolute bottom-1/3 right-1/3 w-16 h-16 opacity-15">
-                <div 
-                  className="w-full h-full"
-                  style={{
-                    background: "linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%)",
-                    transform: "rotate(45deg)",
-                    animation: "float 6s ease-in-out infinite"
-                  }}
-                ></div>
-              </div>
-            </div>
-
-            <div className="p-6 h-full flex flex-col relative z-10">
+            <div className="p-6 h-full flex flex-col">
               {/* Logo Section */}
               <div className="flex items-center mb-8 text-white">
                 <img src={logo} alt="EVS Logo" className="w-10 h-10 mr-3" />

@@ -1,9 +1,16 @@
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-16px); }
+}
+.animate-bounce-slow {
+  animation: bounce-slow 2.5s infinite;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Roboto Slab', serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -15,6 +22,149 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure Roboto Slab is used globally */
+* {
+  font-family: 'Roboto Slab', serif;
+}
+
+/* Fix input field styling for better visibility */
+input {
+  color: #374151 !important;
+  background-color: #ffffff !important;
+  border-color: #d1d5db !important;
+}
+
+input::placeholder {
+  color: #9ca3af !important;
+}
+
+input:focus {
+  color: #111827 !important;
+  background-color: #ffffff !important;
+  border-color: #3b82f6 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Fix button styling for better visibility */
+button {
+  color: #ffffff !important;
+  background-color: transparent !important;
+  border: none !important;
+}
+
+/* Fix link and button text colors */
+a, button[type="button"] {
+  color: #0072a7 !important;
+  background: transparent !important;
+}
+
+a:hover, button[type="button"]:hover {
+  color: #005b8a !important;
+  text-decoration: underline !important;
+}
+
+/* Fix password toggle eye icon */
+.absolute.right-3 svg,
+button[type="button"] svg {
+  color: #6b7280 !important;
+  stroke: #6b7280 !important;
+}
+
+.absolute.right-3:hover svg,
+button[type="button"]:hover svg {
+  color: #374151 !important;
+  stroke: #374151 !important;
+}
+
+/* Fix export buttons, filter buttons, and modal buttons */
+.bg-green-600, .bg-red-600, .bg-blue-600,
+.bg-green-600:hover, .bg-red-600:hover, .bg-blue-600:hover {
+  color: #ffffff !important;
+  background-color: inherit !important;
+}
+
+/* Fix modal close buttons and action buttons */
+.fixed button, .modal button, 
+button:has(svg), button[aria-label] {
+  color: #374151 !important;
+  background-color: transparent !important;
+}
+
+/* Fix filter and export button containers */
+.flex.items-center.gap-3 button,
+.flex.items-center.gap-2 button {
+  color: #374151 !important;
+  background-color: #ffffff !important;
+  border: 1px solid #d1d5db !important;
+}
+
+.flex.items-center.gap-3 button:hover,
+.flex.items-center.gap-2 button:hover {
+  background-color: #f9fafb !important;
+}
+
+/* Specific styles for colored export buttons */
+.bg-green-600 {
+  background-color: #059669 !important;
+  color: #ffffff !important;
+}
+
+.bg-red-600 {
+  background-color: #dc2626 !important;
+  color: #ffffff !important;
+}
+
+.bg-blue-600 {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+}
+
+.bg-green-600:hover {
+  background-color: #047857 !important;
+}
+
+.bg-red-600:hover {
+  background-color: #b91c1c !important;
+}
+
+.bg-blue-600:hover {
+  background-color: #1d4ed8 !important;
+}
+
+/* Fix VerticalSidebar styling */
+.fixed.top-0.left-0 {
+  background-color: #0072a7 !important;
+  color: white !important;
+}
+
+.fixed.top-0.left-0 button {
+  color: white !important;
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.fixed.top-0.left-0 span {
+  color: white !important;
+}
+
+/* Fix sidebar navigation buttons */
+.fixed.top-0.left-0 nav button {
+  color: white !important;
+  background-color: transparent !important;
+}
+
+/* Fix sidebar collapse/expand button */
+.fixed.top-0.left-0 .absolute {
+  background-color: white !important;
+  color: #0072a7 !important;
+  border-color: #0072a7 !important;
+}
+
+body {
+  font-family: 'Roboto Slab', serif;
 }
 
 a {
@@ -30,6 +180,8 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 25%, #e2e8f0 50%, #cbd5e1 75%, #94a3b8 100%);
+  background-attachment: fixed;
 }
 
 

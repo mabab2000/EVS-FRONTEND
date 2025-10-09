@@ -4,7 +4,7 @@ const CheckInSuccess = () => {
   return (
     <div className="min-h-screen   flex items-center justify-center p-4 transition-colors duration-200">
       <div className="max-w-4xl border border-grey-200 w-full">
-        <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 transition-colors duration-200">
+        <div className="bg-blue-700  rounded-3xl shadow-xl p-8 transition-colors duration-200">
           {/* Main Content Row */}
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
             {/* Success Section */}

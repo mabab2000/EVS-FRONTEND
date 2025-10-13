@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import VerticalSidebar from "../../components/VerticalSidebar";
 import TopNavbar from "../../components/TopNavbar";
 import DataTable from "react-data-table-component";
-import { Eye } from "lucide-react";
+import { Eye, Loader2, RefreshCw } from "lucide-react";
 import ViewRecordModal from "../../components/ViewRecordModal";
+import { API_ENDPOINTS } from "../../config/api";
 
 export default function OCRPreview() {
   const [originalRecords] = useState([
@@ -37,13 +38,13 @@ export default function OCRPreview() {
       selector: (row: any) => row.id, 
       sortable: true, 
       width: "60px",
-      center: true,
+      style: { textAlign: "center" as const },
     },
     { 
       name: "Name", 
       selector: (row: any) => row.Name, 
       sortable: true,
-      grow: 1,
+      width: "150px",
     },
     { 
       name: "Phone", 
@@ -54,13 +55,13 @@ export default function OCRPreview() {
       name: "Gender", 
       selector: (row: any) => row.Gender,
       width: "80px",
-      center: true,
+      style: { textAlign: "center" as const },
     },
     { 
       name: "In/Out", 
       selector: (row: any) => row.CheckOut && row.CheckOut !== "Not yet" ? "Out" : "In",
       width: "70px",
-      center: true,
+      style: { textAlign: "center" as const },
       cell: (row: any) => {
         const status = row.CheckOut && row.CheckOut !== "Not yet" ? "Out" : "In";
         return (
@@ -114,7 +115,7 @@ export default function OCRPreview() {
     {
       name: "Action",
       width: "70px",
-      center: true,
+      style: { textAlign: "center" as const },
       cell: (_row: any, index: number) => (
         <button
           onClick={() => handleView(index)}
@@ -240,6 +241,93 @@ export default function OCRPreview() {
     { label: "Address", value: "" },
   ]);
 
+  // OCR API Integration State
+  const [isScanning, setIsScanning] = useState(true); // Start with loading state
+  const [scanResults, setScanResults] = useState<any>(null);
+  const [scannedImage, setScannedImage] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  // Auto-load OCR data when component mounts
+  useEffect(() => {
+    handleScanFolder();
+  }, []);
+
+  // OCR API Call Function
+  const handleScanFolder = async () => {
+    setIsScanning(true);
+    setError(null);
+    
+    console.log('🔍 Starting OCR scan...');
+    console.log('📡 API Endpoint:', API_ENDPOINTS.OCR.SCAN_FOLDER);
+    
+    try {
+      const response = await fetch(API_ENDPOINTS.OCR.SCAN_FOLDER, {
+        method: 'GET',
+        // Removed Content-Type header to avoid CORS preflight
+      });
+
+      console.log('📊 Response status:', response.status);
+      console.log('✅ Response OK:', response.ok);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('📄 API Response:', data);
+      setScanResults(data);
+
+      // Process the first successful result
+      if (data.results && data.results.length > 0) {
+        console.log('🎯 Found results:', data.results.length);
+        const firstResult = data.results.find((result: any) => result.success);
+        console.log('✅ First successful result:', firstResult);
+        
+        if (firstResult) {
+          // Auto-fill form with OCR data directly from API response
+          const updatedFields = [...ocrFields];
+          
+          // Find and update Name field with the names from API
+          const nameIndex = updatedFields.findIndex(field => field.label === "Name");
+          if (nameIndex !== -1 && firstResult.names) {
+            updatedFields[nameIndex].value = firstResult.names;
+            console.log('👤 Set name field:', firstResult.names);
+          }
+          
+          // Find and update ID Number field with the id from API
+          const idIndex = updatedFields.findIndex(field => field.label === "ID Number");
+          if (idIndex !== -1 && firstResult.id) {
+            updatedFields[idIndex].value = firstResult.id;
+            console.log('🆔 Set ID field:', firstResult.id);
+          }
+          
+          setOcrFields(updatedFields);
+          
+          // Set image source for display using the folder path and filename
+          if (firstResult.filename && data.folder) {
+            const imagePath = `${data.folder}\\${firstResult.filename}`;
+            const imageUrl = `http://localhost:8000/image/${encodeURIComponent(firstResult.filename)}`;
+            setScannedImage(imagePath);
+            console.log('🖼️ Set image path:', imagePath);
+            console.log('🌐 Image URL will be:', imageUrl);
+          }
+        } else {
+          console.log('❌ No successful results found');
+          setError("No successful OCR results found in the response");
+        }
+      } else {
+        console.log('❌ No results array found');
+        setError("No OCR results found in the response");
+      }
+
+    } catch (err) {
+      console.error('OCR scan error:', err);
+      setError(err instanceof Error ? err.message : 'Failed to scan folder');
+    } finally {
+      setIsScanning(false);
+    }
+  };
+
   const handleOcrFieldChange = (index: number, value: string) => {
     const updatedFields = [...ocrFields];
     updatedFields[index].value = value;
@@ -271,12 +359,61 @@ export default function OCRPreview() {
         {/* IMAGE + FORM GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-6">
           <div 
-            className="col-span-1 lg:col-span-1 p-3 rounded shadow-lg flex items-center justify-center border"
+            className="col-span-1 lg:col-span-1 p-3 rounded shadow-lg flex flex-col items-center justify-center border"
             style={{ 
               backgroundColor: "#ffffff",
               borderColor: "#93c5fd"
             }}
           >
+            {/* Scan Button */}
+            <div className="w-full mb-3">
+              <button
+                onClick={handleScanFolder}
+                disabled={isScanning}
+                className="w-full px-4 py-2 rounded-lg text-white font-medium transition-all duration-200 flex items-center justify-center gap-2"
+                style={{ 
+                  backgroundColor: isScanning ? "#9ca3af" : "#0072a7",
+                  fontFamily: "'Roboto Slab', serif",
+                  fontWeight: "600",
+                  fontSize: "14px"
+                }}
+                onMouseEnter={(e) => {
+                  if (!isScanning) {
+                    (e.target as HTMLButtonElement).style.backgroundColor = "#005b8a";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isScanning) {
+                    (e.target as HTMLButtonElement).style.backgroundColor = "#0072a7";
+                  }
+                }}
+              >
+                {isScanning ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" />
+                    Scanning...
+                  </>
+                ) : (
+                  <>
+                    <RefreshCw size={16} />
+                    Refresh OCR Data
+                  </>
+                )}
+              </button>
+            </div>
+
+            {/* Error Display */}
+            {error && (
+              <div className="w-full mb-3 p-2 rounded" style={{ backgroundColor: "#fecaca", color: "#dc2626" }}>
+                <p className="text-xs" style={{ fontFamily: "'Roboto Slab', serif" }}>
+                  Error: {error}
+                </p>
+              </div>
+            )}
+
+            {/* Scan Results Info */}
+           
+            {/* Image Preview */}
             <div 
               className="w-full h-48 border border-dashed rounded flex items-center justify-center"
               style={{ 
@@ -284,16 +421,118 @@ export default function OCRPreview() {
                 backgroundColor: "#e6f4fa"
               }}
             >
-              <span 
-                style={{ 
-                  color: "#0072a7", 
-                  fontWeight: "500",
-                  fontFamily: "'Roboto Slab', serif" 
-                }} 
-                className="text-xs"
-              >
-                Image Preview Area
-              </span>
+              {scannedImage && scanResults?.results?.[0]?.filename && scanResults?.folder ? (
+                <div className="w-full h-full relative">
+                  <img 
+                    src={`http://localhost:8000/image/${encodeURIComponent(scanResults.results[0].filename)}`}
+                    alt="Scanned Document"
+                    className="w-full h-full object-contain rounded"
+                    onError={(e) => {
+                    
+                      e.currentTarget.style.display = 'none';
+                      const parent = e.currentTarget.parentElement;
+                      if (parent) {
+                        parent.innerHTML = `
+                          <div class="w-full h-full flex flex-col items-center justify-center p-4">
+                            <div style="background-color: #f0f8ff; border: 1px solid #0072a7; padding: 16px; border-radius: 8px; text-align: center; width: 100%;">
+                              <p style="color: #dc2626; font-weight: 500; font-family: 'Roboto Slab', serif; font-size: 12px; margin-bottom: 8px;">
+                                ❌ Image Failed to Load
+                              </p>
+                              <p style="color: #005b8a; font-family: 'Roboto Slab', serif; font-size: 10px; margin-bottom: 4px;">
+                                <strong>File:</strong> ${scanResults?.results?.[0]?.filename || 'Unknown'}
+                              </p>
+                              <p style="color: #005b8a; font-family: 'Roboto Slab', serif; font-size: 10px; margin-bottom: 4px;">
+                                <strong>Path:</strong> ${scannedImage}
+                              </p>
+                              <p style="color: #005b8a; font-family: 'Roboto Slab', serif; font-size: 10px; margin-bottom: 4px;">
+                                <strong>URL:</strong> ${e.currentTarget.src}
+                              </p>
+                              <p style="color: #16a34a; font-family: 'Roboto Slab', serif; font-size: 10px; margin-bottom: 4px;">
+                                📋 Type: ${scanResults?.results?.[0]?.document_type || 'Unknown'}
+                              </p>
+                              <p style="color: #7c3aed; font-family: 'Roboto Slab', serif; font-size: 10px;">
+                                🔧 Method: ${scanResults?.results?.[0]?.preprocessing_method || 'Unknown'}
+                              </p>
+                            </div>
+                          </div>
+                        `;
+                      }
+                    }}
+                    onLoad={() => {
+                      console.log('✅ Image loaded successfully:', scanResults?.results?.[0]?.filename);
+                    }}
+                  />
+                  {/* Image overlay with document info */}
+                  <div 
+                    className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-2 rounded-b"
+                    style={{ fontSize: "10px", fontFamily: "'Roboto Slab', serif" }}
+                  >
+                   
+                  </div>
+                </div>
+              ) : scanResults?.results?.[0]?.filename ? (
+                <div className="text-center">
+                  <div 
+                    className="p-3 rounded mb-2"
+                    style={{ backgroundColor: "#f0f8ff", border: "1px solid #0072a7" }}
+                  >
+                    <p 
+                      style={{ 
+                        color: "#0072a7", 
+                        fontWeight: "500",
+                        fontFamily: "'Roboto Slab', serif",
+                        fontSize: "12px"
+                      }}
+                    >
+                      Document Processed:
+                    </p>
+                    <p 
+                      style={{ 
+                        color: "#005b8a", 
+                        fontWeight: "400",
+                        fontFamily: "'Roboto Slab', serif",
+                        fontSize: "10px",
+                        wordBreak: "break-all"
+                      }}
+                    >
+                      {scanResults.results[0].filename}
+                    </p>
+                    <p 
+                      style={{ 
+                        color: "#16a34a", 
+                        fontWeight: "500",
+                        fontFamily: "'Roboto Slab', serif",
+                        fontSize: "10px",
+                        marginTop: "4px"
+                      }}
+                    >
+                      Type: {scanResults.results[0].document_type}
+                    </p>
+                    <p 
+                      style={{ 
+                        color: "#7c3aed", 
+                        fontWeight: "500",
+                        fontFamily: "'Roboto Slab', serif",
+                        fontSize: "10px"
+                      }}
+                    >
+                      Method: {scanResults.results[0].preprocessing_method}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <span 
+                  style={{ 
+                    color: "#0072a7", 
+                    fontWeight: "500",
+                    fontFamily: "'Roboto Slab', serif" 
+                  }} 
+                  className="text-xs text-center"
+                >
+                  Image Preview Area<br />
+                  <span className="text-xs opacity-70">Data will load automatically or click "Refresh OCR Data"</span>
+                </span>
+              )}
             </div>
           </div>
 
@@ -312,7 +551,11 @@ export default function OCRPreview() {
                 fontWeight: "600"
               }}
             >
-              Retrieved information
+              Retrieved Information {scanResults && scanResults.successful > 0 && (
+                <span className="text-xs text-green-600 ml-2">
+                  ✓ Auto-filled from OCR
+                </span>
+              )}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {ocrFields.map((field, idx) => (
@@ -326,6 +569,9 @@ export default function OCRPreview() {
                     }}
                   >
                     {field.label}
+                    {(field.label === "Name" || field.label === "ID Number") && scanResults && (
+                      <span className="text-green-600 ml-1 text-xs">✓</span>
+                    )}
                   </label>
                   <input
                     type="text"
@@ -335,7 +581,7 @@ export default function OCRPreview() {
                     className="w-full px-2 py-1.5 rounded border text-xs"
                     style={{
                       border: "1px solid #d1d5db",
-                      backgroundColor: "#ffffff",
+                      backgroundColor: (field.label === "Name" || field.label === "ID Number") && field.value ? "#f0fdf4" : "#ffffff",
                       color: "#374151",
                       fontFamily: "'Roboto Slab', serif"
                     }}
@@ -351,6 +597,57 @@ export default function OCRPreview() {
                   />
                 </div>
               ))}
+            </div>
+            
+            {/* Action Buttons */}
+            <div className="flex gap-2 mt-4">
+              <button
+                onClick={() => {
+                  const resetFields = ocrFields.map(field => ({ ...field, value: "" }));
+                  setOcrFields(resetFields);
+                  setScanResults(null);
+                  setScannedImage(null);
+                  setError(null);
+                }}
+                className="px-3 py-1.5 rounded border text-xs font-medium transition-all duration-200"
+                style={{
+                  backgroundColor: "#ffffff",
+                  borderColor: "#d1d5db",
+                  color: "#6b7280",
+                  fontFamily: "'Roboto Slab', serif"
+                }}
+                onMouseEnter={(e) => {
+                  (e.target as HTMLButtonElement).style.backgroundColor = "#f9fafb";
+                  (e.target as HTMLButtonElement).style.borderColor = "#9ca3af";
+                }}
+                onMouseLeave={(e) => {
+                  (e.target as HTMLButtonElement).style.backgroundColor = "#ffffff";
+                  (e.target as HTMLButtonElement).style.borderColor = "#d1d5db";
+                }}
+              >
+                Clear Form
+              </button>
+              
+              <button
+                onClick={() => {
+                  // Here you could add save/submit functionality
+                  console.log("Form data:", ocrFields);
+                  alert("Form data logged to console");
+                }}
+                className="px-3 py-1.5 rounded text-xs font-medium text-white transition-all duration-200"
+                style={{
+                  backgroundColor: "#16a34a",
+                  fontFamily: "'Roboto Slab', serif"
+                }}
+                onMouseEnter={(e) => {
+                  (e.target as HTMLButtonElement).style.backgroundColor = "#15803d";
+                }}
+                onMouseLeave={(e) => {
+                  (e.target as HTMLButtonElement).style.backgroundColor = "#16a34a";
+                }}
+              >
+                Save Data
+              </button>
             </div>
           </div>
         </div>

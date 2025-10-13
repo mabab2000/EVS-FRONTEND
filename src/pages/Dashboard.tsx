@@ -10,8 +10,6 @@ import {
   ArrowUpRight,
   ChevronRight
 } from "lucide-react";
-import VerticalSidebar from "../components/VerticalSidebar";
-import TopNavbar from "../components/TopNavbar";
 
 export default function Dashboard() {
 
@@ -68,24 +66,32 @@ export default function Dashboard() {
   ];
 
   return (
-    <div style={{ backgroundColor: "#f8fafc", minHeight: "100vh" }}>
-      <VerticalSidebar />
-      <TopNavbar />
+    <div 
+      className="min-h-screen transition-colors"
+      style={{ 
+        background: "linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%)",
+        fontFamily: "'Roboto Slab', serif",
+        padding: "0.5rem"
+      }}
+    >
+      {/* Container - Full Width */}
       <div 
-        className="p-4 ml-[225px] pt-16"
+        className="h-screen rounded-lg shadow-2xl transition-colors"
         style={{ 
-          backgroundColor: "#f8fafc",
-          color: "#374151",
-          minHeight: "100vh",
-          paddingBottom: "2rem"
+          background: "rgba(255, 255, 255, 0.95)",
+          backdropFilter: "blur(20px)",
+          border: "1px solid rgba(255, 255, 255, 0.2)",
+          padding: "1rem",
+          display: "flex",
+          flexDirection: "column"
         }}
       >
         
         {/* Header */}
-        <header className="flex justify-between items-center mb-4">
+        <header className="flex justify-between items-center mb-3">
           <div>
             <h1 
-              className="text-3xl font-bold mb-2"
+              className="text-2xl font-bold mb-1"
               style={{ 
                 color: "#0072a7",
                 fontFamily: "'Roboto Slab', serif",
@@ -95,7 +101,7 @@ export default function Dashboard() {
               EVS Dashboard
             </h1>
             <p 
-              className="text-gray-600 text-base"
+              className="text-gray-600 text-sm"
               style={{ fontFamily: "'Roboto Slab', serif" }}
             >
               Welcome back! Here's what's happening with your Electronic Visitor System.
@@ -103,15 +109,15 @@ export default function Dashboard() {
           </div>
           <div className="flex items-center space-x-4">
             <div 
-              className="px-4 py-2 rounded-lg shadow-md"
+              className="px-3 py-1.5 rounded-lg shadow-md"
               style={{ 
                 background: "linear-gradient(135deg, #0072a7 0%, #005b8a 100%)",
                 color: "white"
               }}
             >
               <div className="flex items-center space-x-2">
-                <Calendar className="w-5 h-5" />
-                <span style={{ fontFamily: "'Roboto Slab', serif", fontSize: "0.875rem" }}>
+                <Calendar className="w-4 h-4" />
+                <span style={{ fontFamily: "'Roboto Slab', serif", fontSize: "0.75rem" }}>
                   {new Date().toLocaleDateString('en-US', { 
                     weekday: 'long', 
                     year: 'numeric', 
@@ -124,15 +130,15 @@ export default function Dashboard() {
           </div>
         </header>
 
-        {/* Hero Section - Full Width */}
-        <div className="mb-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            {/* Hero Card - Left Side */}
+        {/* Hero Section - Reduced Width */}
+        <div className="mb-3">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+            {/* Compact Hero Card - Left Side */}
             <div 
-              className="lg:col-span-2 p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl cursor-pointer relative overflow-hidden"
+              className="lg:col-span-2 p-4 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl cursor-pointer relative overflow-hidden"
               style={{ 
                 background: "linear-gradient(135deg, #0072a7 0%, #1e40af 25%, #3b82f6 50%, #0ea5e9 75%, #0284c7 100%)",
-                minHeight: "140px"
+                minHeight: "100px"
               }}
             >
               {/* Background Pattern */}
@@ -206,14 +212,14 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Statistics Cards - Full Width Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        {/* Statistics Cards - Compact Grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-3">
           {statsData.map((stat, index) => (
             <div 
               key={index}
-              className="p-4 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer"
+              className="p-3 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer"
               style={{ 
-                background: "rgba(255, 255, 255, 0.9)",
+                background: "rgba(255, 255, 255, 0.8)",
                 backdropFilter: "blur(10px)",
                 border: "1px solid rgba(255, 255, 255, 0.2)"
               }}
@@ -261,20 +267,20 @@ export default function Dashboard() {
           ))}
         </div>
 
-        {/* Main Content Grid - Full Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        {/* Main Content Grid - Optimized Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 flex-1">
           
-          {/* Quick Actions - Full Size */}
+          {/* Quick Actions - Compact */}
           <div 
-            className="lg:col-span-2 p-4 rounded-xl shadow-lg"
+            className="lg:col-span-2 p-3 rounded-xl shadow-lg"
             style={{ 
-              background: "rgba(255, 255, 255, 0.9)",
+              background: "rgba(255, 255, 255, 0.8)",
               backdropFilter: "blur(10px)",
               border: "1px solid rgba(255, 255, 255, 0.2)"
             }}
           >
             <h2 
-              className="text-lg font-semibold mb-4"
+              className="text-base font-semibold mb-3"
               style={{ 
                 color: "#0072a7",
                 fontFamily: "'Roboto Slab', serif",
@@ -283,11 +289,11 @@ export default function Dashboard() {
             >
               Quick Actions
             </h2>
-            <div className="space-y-3">
+            <div className="space-y-2">
               {quickActions.map((action, index) => (
                 <div 
                   key={index}
-                  className="group p-4 rounded-lg transition-all duration-300 hover:shadow-md cursor-pointer"
+                  className="group p-2.5 rounded-lg transition-all duration-300 hover:shadow-md cursor-pointer"
                   style={{ 
                     background: "rgba(248, 250, 252, 0.8)",
                     border: "1px solid rgba(226, 232, 240, 0.8)"
@@ -301,16 +307,17 @@ export default function Dashboard() {
                     e.currentTarget.style.borderColor = "rgba(226, 232, 240, 0.8)";
                   }}
                 >
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center space-x-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center space-x-2">
                       <div 
-                        className={`p-2 rounded-lg text-white ${action.color}`}
+                        className={`p-1.5 rounded-lg text-white ${action.color}`}
+                        style={{ transform: "scale(0.8)" }}
                       >
                         {action.icon}
                       </div>
                       <div>
                         <h3 
-                          className="font-semibold text-gray-900 text-sm"
+                          className="font-semibold text-gray-900 text-xs"
                           style={{ fontFamily: "'Roboto Slab', serif" }}
                         >
                           {action.title}
@@ -323,7 +330,7 @@ export default function Dashboard() {
                         </p>
                       </div>
                     </div>
-                    <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 group-hover:translate-x-1 transition-all" />
+                    <ChevronRight className="w-3 h-3 text-gray-400 group-hover:text-gray-600 group-hover:translate-x-1 transition-all" />
                   </div>
                   <div>
                     <div className="flex items-center justify-between mb-1">
@@ -358,17 +365,17 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Attendance Performance Overview - Full Size */}
+          {/* Attendance Performance Overview - Expanded */}
           <div 
-            className="lg:col-span-3 p-4 rounded-xl shadow-lg"
+            className="lg:col-span-3 p-3 rounded-xl shadow-lg"
             style={{ 
-              background: "rgba(255, 255, 255, 0.9)",
+              background: "rgba(255, 255, 255, 0.8)",
               backdropFilter: "blur(10px)",
               border: "1px solid rgba(255, 255, 255, 0.2)"
             }}
           >
             <h2 
-              className="text-lg font-semibold mb-4"
+              className="text-base font-semibold mb-3"
               style={{ 
                 color: "#0072a7",
                 fontFamily: "'Roboto Slab', serif",
@@ -377,34 +384,34 @@ export default function Dashboard() {
             >
               Attendance Performance
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               
               {/* Left Column - Performance Metrics */}
-              <div className="space-y-4">
+              <div className="space-y-3">
                 <div 
-                  className="p-3 rounded-lg"
+                  className="p-2.5 rounded-lg"
                   style={{ background: "rgba(239, 246, 255, 0.6)" }}
                 >
-                  <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center justify-between mb-1">
                     <div className="flex items-center space-x-2">
-                      <TrendingUp className="w-4 h-4 text-green-500" />
+                      <TrendingUp className="w-3 h-3 text-green-500" />
                       <span 
-                        className="font-medium text-gray-900 text-sm"
+                        className="font-medium text-gray-900 text-xs"
                         style={{ fontFamily: "'Roboto Slab', serif" }}
                       >
                         Check-in Success Rate
                       </span>
                     </div>
                     <span 
-                      className="text-green-600 font-bold text-sm"
+                      className="text-green-600 font-bold text-xs"
                       style={{ fontFamily: "'Roboto Slab', serif" }}
                     >
                       99.5%
                     </span>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="w-full bg-gray-200 rounded-full h-1.5">
                     <div
-                      className="bg-green-500 h-2 rounded-full"
+                      className="bg-green-500 h-1.5 rounded-full"
                       style={{ width: "99.5%" }}
                     ></div>
                   </div>
